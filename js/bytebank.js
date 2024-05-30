@@ -1,4 +1,4 @@
-let saldo = 3000;
+let saldo = 300;
 
 const elementoSaldo = document.querySelector(".saldo-valor .valor")
 elementoSaldo.textContent = saldo;
@@ -12,4 +12,38 @@ elementoFormulario.addEventListener("submit", function(event) {
         alert("por favor preencha todos os campos da transação!");
         return;
     }
+
+    //Obtendo os elementos
+    const inputTipoTransacao = elementoFormulario.querySelector("#tipoTransacao");
+    const inputValor = elementoFormulario.querySelector("#valor");
+    const inputData = elementoFormulario.querySelector("#data");
+
+    //Obtendo o valor dos elementos
+    let tipoTransicao = inputTipoTransacao.value;
+    let valor = inputValor.value;
+    let data = inputData.value;
+
+    if (tipoTransicao == "Depósito") {
+        saldo += valor;
+    } else if  (tipoTransicao == "Transferência" || tipoTransicao == "pagamento de Boleto") {
+        saldo -= valor;
+    } else {
+        alert("Tipo de trasação é ivalido!");
+        return;
+    }
+
+    // Atualiza o saldo mostrado na tela com o novo valor
+    elementoSaldo.textContent = saldo; 
+
+    //Criando o objeto de "novaTransação"
+    const novaTransacao = {
+        tipoTransicao : tipoTransicao,
+        valor: valor,
+        data: data
+    }
+
+    console.log(novaTransacao);
+
+    //Reseteando formulario uma vez que já recebeu os dados da nova transação 
+    elementoFormulario.reset();
 });
